@@ -21,17 +21,10 @@ class DriverLicenseUpdateForm(ModelForm):
             "license_number": TextInput(attrs={"class": "form-control"}),
         }
 
-    def clean_license_number(self):
-        license_number = self.cleaned_data["license_number"]
-        if self.instance.license_number == license_number:
-            raise ValidationError(
-                "Licence values are the same.")
-        return license_number
-
 
 class CarCreateForm(ModelForm):
     drivers = ModelMultipleChoiceField(
-        queryset=get_user_model().objects.all(),
+        queryset=Driver.objects,
         widget=CheckboxSelectMultiple,
         required=False
     )
